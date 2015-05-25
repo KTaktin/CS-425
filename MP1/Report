@@ -1,0 +1,7 @@
+Andrew Xu, ahxu2
+
+Initially I had delays in the client side (four servers), however I ended up moving the delay, and much of the logic, over to the server side (central server). In the central server, I would implement the delays with a rand() function in message threads. Each invocation has a different message rand value. Since the messages are sort of ordered with a queue (used sequence numbers, basically the same thing), when it's a send thread's to go execute it'll sleep for the rand value and then send the message. 
+
+For linearizability, I have a total ordered central server. Whenever a new there's a new command, it queues up. Whenever a command finishes, the next command is allowed through.
+
+Sequential consistency had the same modifying functions as linearizability. The only difference is that the read only looks at the local value rather than getting values from all servers.
